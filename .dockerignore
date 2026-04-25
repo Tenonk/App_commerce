@@ -1,0 +1,16 @@
+env
+# L'environnement virtuel
+venv/
+env/
+.env
+
+# Les fichiers de cache Python
+__pycache__/
+*.pyc
+
+# La base de données locale (si tu veux repartir à neuf dans Docker)
+db.sqlite3
+
+# Les dossiers d'IDE
+.vscode/
+.idea/

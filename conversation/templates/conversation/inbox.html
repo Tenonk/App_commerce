@@ -1,0 +1,30 @@
+{% extends 'core/Base.html' %}
+
+{% block title %} Mes Conversations {% endblock %}
+
+{% block content %}
+<h1 class="mb-6 text-3xl">Inbox</h1>
+
+<div class="space-y-6"> {% for conversation in conversations %}
+        <a href="{% url 'conversation:detail' conversation.id %}">
+            <div class="p-6 flex bg-gray-100 rounded-xl hover:bg-gray-200 transition"> <div class="pr-6">
+                    <img src="{{ conversation.item.image.url }}" class="w-20 h-20 object-cover rounded-xl">
+                </div>
+
+                <div>
+                    {% for menber in conversation.menbers.all %}
+                        {% if menber != request.user %}
+                            <p class="mb-2"><strong>{{ menber.username }}</strong> | <span class="text-gray-500">{{ conversation.modified_at|timesince }}</span></p>
+                            <p class="text-gray-600">{{ conversation.item.name }}</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
+    {% empty %}
+        <div class="p-6 bg-gray-100 rounded-xl">
+            <p>Aucune conversation trouvée.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

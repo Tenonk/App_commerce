@@ -1,0 +1,32 @@
+{% extends 'core/Base.html' %}
+
+{% block title %}Conversation{% endblock %}
+
+{% block content %}
+<h1 class="mb-6 text-3xl">Inbox</h1>
+
+<div class="space-y-6">
+    {% for message in conversation.messages.all %}
+        <div class="p-6 flex rounded-xl {% if message.created_by == request.user %}bg-blue-100 ml-auto{% else %}bg-gray-100 mr-auto{% endif %}" style="max-width: 80%;">
+            <div>
+                <p class="mb-2 text-xs text-gray-500">
+                    <strong>{{ message.created_by.username }}</strong> @ {{ message.created_at|date:"d/m/Y H:i" }}
+                </p>
+                <p class="text-gray-700">{{ message.content }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<form method="post" action="." class="mt-6 p-6 bg-white border border-gray-200 rounded-xl">
+    {% csrf_token %}
+    
+    <div class="space-y-4">
+        {{ form.as_p }}
+    </div>
+
+    <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white mt-4 transition w-full md:w-auto">
+        Envoyer
+    </button>
+</form>
+{% endblock %}
